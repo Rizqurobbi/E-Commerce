@@ -1,23 +1,23 @@
 {
   "dataUser": [
     {
-      "username": "",
-      "email": "",
-      "password": "",
-      "role": "User",
+      "username": "admin000",
+      "email": "admin000@gmail.com",
+      "password": "passadmin",
+      "role": "Admin",
       "id": 1
     },
     {
-      "username": "",
-      "email": "zakkirizqurobbi02@gmail.com",
-      "password": "",
+      "username": "hai",
+      "email": "hai@gmail.com",
+      "password": "hai123",
       "role": "User",
       "id": 2
     },
     {
-      "username": "Zakki",
-      "email": "zakkirizqurobbi02@gmail.com",
-      "password": "asdadad",
+      "username": "test",
+      "email": "test@gmail.com",
+      "password": "test123",
       "role": "User",
       "id": 3
     }
