@@ -1,0 +1,25 @@
+{
+  "dataUser": [
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "role": "User",
+      "id": 1
+    },
+    {
+      "username": "",
+      "email": "zakkirizqurobbi02@gmail.com",
+      "password": "",
+      "role": "User",
+      "id": 2
+    },
+    {
+      "username": "Zakki",
+      "email": "zakkirizqurobbi02@gmail.com",
+      "password": "asdadad",
+      "role": "User",
+      "id": 3
+    }
+  ]
+}
