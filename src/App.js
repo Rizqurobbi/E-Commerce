@@ -7,6 +7,7 @@ import AuthPage from './pages/AuthPage';
 import NavbarComponent from './component/NavbarReact';
 import { Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
+import Product_Management from './pages/Product';
 
 
 
@@ -24,6 +25,7 @@ class App extends React.Component {
       <Routes>
         <Route path="/"element={<HomePage/>}/>
         <Route path="/auth-page"element={<AuthPage/>}/>
+        <Route path="/product-page"element={<Product_Management/>}/>
       </Routes>
       {/* <AuthPage/> */}
       </div>

@@ -1,26 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Collapse, } from 'reactstrap';
 
 class NavbarComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            openCollapse:false
-         }
+        this.state = {
+            openCollapse: false
+        }
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <Navbar expand="md">
                 <NavbarBrand>
-                    Ecommerce
+                    <Link to="/">
+                        <img src="https://www.sipayo.com/wp-content/uploads/2017/12/e-commerce.png" alt="logo-brand" width="50px" />
+                    </Link>
                 </NavbarBrand>
-                <NavbarToggler onClick={()=> this.setState({openCollapse:!this.state.openCollapse})}/>
+                <NavbarToggler onClick={() => this.setState({ openCollapse: !this.state.openCollapse })} />
                 <Collapse isOpen={this.state.openCollapse} navbar>
                     <Nav>
                         <NavItem>
-                            <NavLink>
+                            <Link to="/product-page">
                                 Product
-                            </NavLink>
+                            </Link>
                         </NavItem>
                         <NavItem>
                             <NavLink>
@@ -28,11 +31,13 @@ class NavbarComponent extends React.Component {
                             </NavLink>
                         </NavItem>
                     </Nav>
-                        <Button type="button" style={{marginLeft:"auto"}}>Masuk dan Daftar</Button>
+                    <Link to="/auth-page" style={{ marginLeft: "auto" }}>
+                        <Button type="button" color="warning" outline>Masuk dan Daftar</Button>
+                    </Link>
                 </Collapse>
             </Navbar>
-         );
+        );
     }
 }
- 
+
 export default NavbarComponent;
