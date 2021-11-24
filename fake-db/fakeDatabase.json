@@ -20,6 +20,22 @@
       "password": "test123",
       "role": "User",
       "id": 3
+    },
+    {
+      "username": "zakki",
+      "email": "zakki",
+      "password": "12345",
+      "role": "user",
+      "status": "active",
+      "id": 4
+    },
+    {
+      "username": "saki",
+      "email": "saki",
+      "password": "1234",
+      "role": "user",
+      "status": "active",
+      "id": 5
     }
   ]
 }

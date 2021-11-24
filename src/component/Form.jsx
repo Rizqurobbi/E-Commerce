@@ -40,9 +40,10 @@ class Form extends React.Component {
             alert(`Daftar Gagal❌,Pastikan confirm password sesuai dengan password!`)
         }
     }
-    btnLogin = () => {
+    btnMasuk = () => {
         let { dataUser, loginEmail, loginPassword} = this.state;
         let index = null;
+        console.log(dataUser.length)
         for (let i = 0; i < dataUser.length; i++) {
             if (dataUser[i].email === loginEmail && dataUser[i].password === loginPassword) {
                 index = i
@@ -92,7 +93,7 @@ class Form extends React.Component {
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1" onChange={(event) => this.handleInput(event.target.value, "loginPassword")} />
                             </div>
-                            <button type="submit" onClick={this.btnLogin} class="btn btn-primary">Masuk</button>
+                            <button type="submit" onClick={this.btnMasuk} class="btn btn-primary">Masuk</button>
                         </form>
                     </div>
                     <div className="col-6">
