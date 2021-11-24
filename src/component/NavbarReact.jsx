@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Nav, Navbar, NavbarBrand, NavbarText, NavbarToggler, NavItem, NavLink, Collapse, } from 'reactstrap';
+import { Button, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Collapse, } from 'reactstrap';
 
 class NavbarComponent extends React.Component {
     constructor(props) {
