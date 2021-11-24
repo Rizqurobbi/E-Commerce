@@ -11,7 +11,6 @@ class Product_Management extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nama: "",
             products: []
         }
     }
@@ -190,6 +189,23 @@ class Product_Management extends React.Component {
                                                             Delete
                                                         </Button>
                                                     </Row>
+                                                    <FormGroup>
+                                                        <Label for="form-images">
+                                                            Images
+                                                        </Label>
+                                                        <Input
+                                                            id="form-images"
+                                                            name="images"
+                                                            type="url"  
+                                                            defaultValue={value.images}
+                                                        />
+                                                        <Input
+                                                            id=""
+                                                            name=""
+                                                            type="url"
+                                                            defaultValue={value.images}
+                                                        />
+                                                    </FormGroup>
                                                 </Form>
                                             </ModalBody>
                                             <ModalFooter>
