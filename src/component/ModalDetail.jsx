@@ -1,50 +1,124 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
+import { Form, FormGroup, Label, Input, Row} from "reactstrap"
 
 class ModalDetail extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonOpen: false
     }
-    render() {
-        return (
-            <div>
-            <Button
-              color="danger"
-              onClick={function noRefCheck(){}}
-              
-            >
-              Click Me
+  }
+  render() {
+    return (
+      <div>
+        <Button color="danger" onClick={() => this.setState({ buttonOpen: true })} >
+          Detail
+        </Button>
+        <Modal
+          centered
+          size="md"
+          toggle={() => this.setState({ buttonOpen: false })}
+          isOpen={this.state.buttonOpen}
+        >
+          <ModalHeader toggle={() => this.setState({ buttonOpen: false })}>
+            Detail Product
+          </ModalHeader>
+          <ModalBody>
+            <Form>
+            <FormGroup>
+            <Label for="form-namaproduk">
+            Nama Product
+            </Label>
+            <Input
+            id="form-namaproduk"
+            name="nama-produk"
+            type ="text"
+            defaultValue={this.state.nama}
+            />
+            </FormGroup>
+            <FormGroup>
+            <Label for="form-deskripsi">
+            Deskripsi
+            </Label>
+            <Input
+            id="form-deskripsi"
+            name="deskripsi"            
+            type ="text"
+            />
+            </FormGroup>
+            <Row>
+            <FormGroup className="col-6">
+            <Label for="form-brand">
+            Brand
+            </Label>
+            <Input
+            id="form-brand"
+            name="brand"            
+            type ="text"
+            />
+            </FormGroup>
+            <FormGroup className="col-6">
+            <Label for="form-kategori">
+            Kategori
+            </Label>
+            <Input
+            id="form-kategori"
+            name="kategori"            
+            type ="text"
+            />
+            </FormGroup>
+            </Row>
+            <FormGroup>
+            <Label for="form-harga">
+            Harga
+            </Label>
+            <Input
+            id="form-harga"
+            name="harga"            
+            type ="number"
+            />
+            </FormGroup>
+            <Row>
+            <FormGroup className="col-5">
+            <Label for="form-stok1">
+              Stok
+            </Label>
+            <Input
+            id="form-stok1"
+            name="brand"            
+            type ="text"
+            />
+            </FormGroup>
+            <FormGroup className="col-5">
+            <Label for="form-kategori">
+            
+            </Label>
+            <Input
+            id="form-stok2"
+            name="stok2"            
+            type ="number"
+            />
+            </FormGroup>
+            <Button className="col-2">
+              Delete
             </Button>
-            <Modal
-              fullscreen=""
-              size=""
-              toggle={function noRefCheck(){}}
-            >
-              <ModalHeader toggle={function noRefCheck(){}}>
-                Modal title
-              </ModalHeader>
-              <ModalBody>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  color="primary"
-                  onClick={function noRefCheck(){}}
-                >
-                  Do Something
-                </Button>
-                {' '}
-                <Button onClick={function noRefCheck(){}}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </div> 
-        );
-    }
+            </Row>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={function noRefCheck() { }}>
+              Do Something
+            </Button>
+            {' '}
+            <Button onClick={() => this.setState({ buttonOpen: false })}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
 }
 
 export default ModalDetail;
