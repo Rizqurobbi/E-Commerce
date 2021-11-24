@@ -4,6 +4,7 @@ import React from 'react';
 import Navbar from './component/navbar';
 import Form from './component/Form';
 import AuthPage from './pages/AuthPage';
+import NavbarComponent from './component/NavbarReact';
 
 
 
@@ -17,6 +18,7 @@ class App extends React.Component {
       <div>
       {/* <Navbar/>
       <Form/> */}
+      <NavbarComponent/>
       <AuthPage/>
       </div>
      );
