@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { Button, Container, FormGroup, Input, InputGroup, InputGroupText, Label, Toast, ToastBody, ToastHeader } from 'reactstrap';
+import { loginAction } from "../redux/actions";
+import { connect } from "react-redux"
 
 const API_URL = "http://localhost:2000"
 class AuthPage extends React.Component {
@@ -12,10 +14,10 @@ class AuthPage extends React.Component {
             logPassType: "password",
             regPassShow: "Show",
             regPassType: "password",
-            toastOpen:false,
-            toastHeader:"",
-            toastMessage:"",
-            toastIcon:""
+            toastOpen: false,
+            toastHeader: "",
+            toastMessage: "",
+            toastIcon: ""
         }
     }
     // btnPasswordVisibility=()=>{
@@ -56,7 +58,8 @@ class AuthPage extends React.Component {
         // alert(`${this.state.email}, ${this.passwordLogin.value}`)
         axios.get(`${API_URL}/dataUser?email=${this.state.email}&password${this.passwordLogin.value}`)
             .then((response) => {
-                console.log(response.data)
+                console.log("RESPONSE LOGIN ==>",response.data)
+                this.props.loginAction(response.data[0])
             })
             .catch((err) => {
                 console.log(err)
@@ -67,10 +70,10 @@ class AuthPage extends React.Component {
         if (this.usernameRegis.value == "" || this.emailRegis.value == "" || this.passwordRegis.value == "" || this.confPasswordRegis == "") {
             // alert("Lengkapi semua data")
             this.setState({
-                toastOpen:true,
-                toastHeader:"Register Warning",
-                toastIcon:"warning",
-                toastMessage:"Isi semua form"
+                toastOpen: true,
+                toastHeader: "Register Warning",
+                toastIcon: "warning",
+                toastMessage: "Isi semua form"
             })
         } else {
             if (this.passwordRegis.value == this.confPasswordRegis.value) {
@@ -85,31 +88,31 @@ class AuthPage extends React.Component {
                     }).then((response) => {
                         // alert("Registrasi Berhasil")
                         this.setState({
-                            toastOpen:true,
-                            toastHeader:"Register Status",
-                            toastIcon:"success",
-                            toastMessage:"Registrasi Berhasil"
+                            toastOpen: true,
+                            toastHeader: "Register Status",
+                            toastIcon: "success",
+                            toastMessage: "Registrasi Berhasil"
                         })
-                        
+
                     }).catch((err) => {
                         console.log(err)
                     })
                 } else {
                     // alert("Email salah")
                     this.setState({
-                        toastOpen:true,
-                        toastHeader:"Register Warning",
-                        toastIcon:"warning",
-                        toastMessage:"Email salah"
+                        toastOpen: true,
+                        toastHeader: "Register Warning",
+                        toastIcon: "warning",
+                        toastMessage: "Email salah"
                     })
                 }
             } else {
                 // alert("Password tidak sesuai")
                 this.setState({
-                    toastOpen:true,
-                    toastHeader:"Register Warning",
-                    toastIcon:"warning",
-                    toastMessage:"Password tidak sesuai"
+                    toastOpen: true,
+                    toastHeader: "Register Warning",
+                    toastIcon: "warning",
+                    toastMessage: "Password tidak sesuai"
                 })
             }
         }
@@ -119,13 +122,13 @@ class AuthPage extends React.Component {
         return (
             <Container className="p-5">
                 <div>
-                    <Toast isOpen={this.state.toastOpen} style={{position:"fixed"}}>
-                        <ToastHeader icon={this.state.toastIcon} toggle={()=> this.setState({ toastOpen: false })}>
-                        {this.state.toastHeader}
-                            
+                    <Toast isOpen={this.state.toastOpen} style={{ position: "fixed" }}>
+                        <ToastHeader icon={this.state.toastIcon} toggle={() => this.setState({ toastOpen: false })}>
+                            {this.state.toastHeader}
+
                         </ToastHeader>
                         <ToastBody>
-                        {this.state.toastMessage}
+                            {this.state.toastMessage}
                         </ToastBody>
 
                     </Toast>
@@ -194,4 +197,4 @@ class AuthPage extends React.Component {
     }
 }
 
-export default AuthPage;
+export default connect(null, { loginAction })(AuthPage);

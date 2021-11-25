@@ -5,12 +5,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducers } from './redux/reducers';
 
+const globalStore = createStore(rootReducers)
 ReactDOM.render(
+  <Provider store={globalStore}>
   <BrowserRouter>
     <App />
-  </BrowserRouter>,
-  
+  </BrowserRouter>
+  </Provider>
+  ,
   document.getElementById('root')
 );
 

@@ -56,6 +56,7 @@ class ModalDetail extends React.Component {
             id="form-brand"
             name="brand"            
             type ="text"
+            defaultValue
             />
             </FormGroup>
             <FormGroup className="col-6">

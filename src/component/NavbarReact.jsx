@@ -21,7 +21,7 @@ class NavbarComponent extends React.Component {
                 <Collapse isOpen={this.state.openCollapse} navbar>
                     <Nav>
                         <NavItem>
-                            <Link to="/product-page">
+                            <Link to="/product-management">
                                 Product
                             </Link>
                         </NavItem>
