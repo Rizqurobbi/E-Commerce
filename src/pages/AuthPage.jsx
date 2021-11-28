@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Container, FormGroup, Input, InputGroup, InputGroupText, Label, Toast, ToastBody, ToastHeader } from 'reactstrap';
 import { loginAction } from "../redux/actions";
 import { connect } from "react-redux"
+import { Navigate } from 'react-router';
 
 const API_URL = "http://localhost:2000"
 class AuthPage extends React.Component {
@@ -59,6 +60,7 @@ class AuthPage extends React.Component {
         axios.get(`${API_URL}/dataUser?email=${this.state.email}&password${this.passwordLogin.value}`)
             .then((response) => {
                 console.log("RESPONSE LOGIN ==>",response.data)
+                localStorage.setItem("data", JSON.stringify(response.data[0]))
                 this.props.loginAction(response.data[0])
             })
             .catch((err) => {
@@ -81,7 +83,7 @@ class AuthPage extends React.Component {
 
                     axios.post(`${API_URL}/dataUser`, {
                         username: this.usernameRegis.value,
-                        email: this.usernameRegis.value,
+                        email: this.emailRegis.value,
                         password: this.passwordRegis.value,
                         role: "user",
                         status: "active",
@@ -118,7 +120,10 @@ class AuthPage extends React.Component {
         }
     }
     render() {
-        const { passwordShown } = this.state
+        // const { passwordShown } = this.state
+        if (this.props.iduser){
+            return <Navigate to="/"/>
+        }
         return (
             <Container className="p-5">
                 <div>
@@ -196,5 +201,10 @@ class AuthPage extends React.Component {
         );
     }
 }
+const mapToProps = (state) =>{
+    return{
+        iduser: state.userReducer.id
+    }
+}
 
-export default connect(null, { loginAction })(AuthPage);
+export default connect(mapToProps, { loginAction })(AuthPage);

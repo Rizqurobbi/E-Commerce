@@ -4,41 +4,19 @@
       "username": "admin000",
       "email": "admin000@gmail.com",
       "password": "passadmin",
-      "role": "Admin",
+      "role": "admin",
       "id": 1
     },
     {
-      "username": "hai",
-      "email": "hai@gmail.com",
-      "password": "hai123",
-      "role": "User",
-      "id": 2
-    },
-    {
-      "username": "test",
-      "email": "test@gmail.com",
-      "password": "test123",
-      "role": "User",
-      "id": 3
-    },
-    {
       "username": "zakki",
-      "email": "zakki",
-      "password": "12345",
-      "role": "user",
-      "status": "active",
-      "id": 4
-    },
-    {
-      "username": "saki",
-      "email": "saki",
+      "email": "zakki@mail.com",
       "password": "1234",
       "role": "user",
       "status": "active",
-      "id": 5
+      "id": 2
     }
   ],
-  "products":[
+  "products": [
     {
       "nama": "IDALINNEA D",
       "deskripsi": " Ritsleting yang tersembunyi membuat sarung mudah dilepas.  Sarung bantal dengan tampilan cermin karena memiliki pola yang sama di kedua sisi.  Katun adalah bahan alami lembut dan mudah dirawat yang dapat Anda cuci dengan mesin.",

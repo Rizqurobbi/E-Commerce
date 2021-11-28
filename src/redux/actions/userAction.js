@@ -7,3 +7,11 @@ export const loginAction=(data)=>{
 
     }
 }
+
+export const logOutAction=()=>{
+    return{
+        type: "LOGOUT",
+        
+    }
+    
+}

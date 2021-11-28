@@ -4,7 +4,7 @@ import { Table, Button } from 'reactstrap';
 import ModalEditProduct from '../component/ModalEditProduct';
 import {dataAction} from '../redux/actions'
 import { connect } from "react-redux"
-
+import ModalAdd from '../component/ModalAdd';
 const API_URL = "http://localhost:2000"
 
 class ProductManagement extends Component {
@@ -13,7 +13,8 @@ class ProductManagement extends Component {
         this.state = {
             productList: [],
             modalEditOpen:false,
-            detailProduk:{}
+            detailProduk:{},
+            modalAddOpen:false
         }
     }
 
@@ -54,6 +55,7 @@ class ProductManagement extends Component {
         return (
             <div className="container p-3">
                 <h3 className="text-center">Produk Management</h3>
+                <ModalAdd/>
                 <ModalEditProduct
                     modalOpen={this.state.modalEditOpen}
                     detailProduk={this.state.detailProduk}
