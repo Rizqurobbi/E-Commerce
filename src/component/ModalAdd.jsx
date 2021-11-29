@@ -1,191 +1,397 @@
-import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
-import { Col, FormGroup, Label, Input, Row } from "reactstrap"
+import React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 const API_URL = "http://localhost:2000"
+
 class ModalAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonOpen: false,
-            inputStock:
-                [
-                    
-                ],  
-            inputImages: [],
+            stock: [],
+            images: []
         }
     }
 
-    btnSubmit = () => {
-        axios.post(`${API_URL}/products`, {
-            nama: this.namaAdd.value,
-            deskripsi: this.deskripsiAdd.value,
-            brand: this.brandAdd.value,
-            kategori: this.kategoriAdd.value,
-            harga: this.hargaAdd.value,
-            images:this.imagesAdd.value,
-            stock:this.stockAdd.value
-        })
-    }
-    btnDeleteStock = (idx) => {
-        let deleteStock = this.state.inputStock
-        deleteStock.splice(idx, 1)
-        this.setState({ deleteStock })
-    }
-    btnDeleteImage = (idx) => {
-        let deleteImage = this.state.inputImages
-        deleteImage.splice(idx, 1)
-        this.setState({ deleteImage })
 
-    }
-    addImage = () => {
-        let newImage = ""
-        this.setState(({ inputImages: this.state.inputImages.concat([newImage]) }))
-    }
-
-    addStock = () => {
-        let newStock = {
-            type: "",
-            qty: null
+    onBtAdd = () => {
+        let data = {
+            nama: this.inNama.value,
+            brand: this.inBrand.value,
+            deskripsi: this.inDeskripsi.value,
+            kategori: this.inKategori.value,
+            harga: parseInt(this.inHarga.value),
+            stock: this.state.stock,
+            images: this.state.images
         }
-        this.setState(({ inputStock: this.state.inputStock.concat([newStock]) }))
+        console.log(this.state.images)
+        if (data.nama == "" || data.brand == "" || data.deskripsi == "" || data.kategori == "" || data.stock.length == 0 || data.images.length == 0) {
+            alert("Isi semua form")
+        } else {
+            axios.post(API_URL + '/products', data)
+                .then(res => {
+                    console.log(res.data)
+                    this.props.getData()
+                    alert('Add Product Success')
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
+    }
+
+    onBtAddStock = () => {
+        // let tempStock = [...this.state.stock]
+        this.state.stock.push({ id: null, type: null, qty: null })
+        this.setState({ stock: this.state.stock })
+    }
+
+    // menambah penampung data image pada state.images
+    onBtAddImages = () => {
+        this.state.images.push("")
+        this.setState({ images: this.state.images })
     }
 
     printStock = () => {
-        return this.state.inputStock.map((item, index) => {
-
-            return <Row>
-                <Col>
-                    <Input innerRef={(element) => this.stockAdd = element} style={{ textAlign: "center" }} type="text" placeholder={`Type-${index + 1}`} />
-                </Col>
-                <Col>
-                    <Input innerRef={(element) => this.stockAdd = element} style={{ textAlign: "center" }} type="number" placeholder={`Stock-${index + 1}`} />
-                </Col>
-                <Col>
-                    <Button size="sm" onClick={this.btnDeleteStock} style={{ cursor: 'pointer' }} color="danger" outline>Delete</Button>
-                </Col>
-            </Row>
-        })
-
-
-
+        if (this.state.stock.length > 0) {
+            return this.state.stock.map((item, index) => {
+                return <Row>
+                    <Col>
+                        <Input type="text" placeholder={`Type-${index + 1}`} onChange={(e) => this.handleType(e, index)} />
+                    </Col>
+                    <Col>
+                        <Input type="number" placeholder={`Stock-${index + 1}`} onChange={(e) => this.handleStock(e, index)} />
+                    </Col>
+                    <Col>
+                        <a className="btn btn-outline-danger" onClick={() => this.onBtDeleteStock(index)} style={{ cursor: 'pointer' }}>Delete</a>
+                    </Col>
+                </Row>
+            })
+        }
     }
+
+    // render element input form image
     printImages = () => {
-        return this.state.inputImages.map((item, index) => {
-            return <Row>
-                <Col>
-                    <Input innerRef={(element) => this.imageAdd = element} style={{ textAlign: "center" }} placeholder={`Image-${index + 1}`} type="url" />
-                </Col>
-                <Col>
-                    <Button size="sm" onClick={this.btnDeleteImage} style={{ cursor: 'pointer' }} color="danger" outline>Delete</Button>
-                </Col>
-
-            </Row>
-        })
+        if (this.state.images.length > 0) {
+            return this.state.images.map((item, index) => {
+                return <Row>
+                    <Col>
+                        <Input type="text" placeholder={`Images-${index + 1}`}
+                            onChange={(e) => this.handleImages(e, index)} />
+                    </Col>
+                    <Col>
+                        <a className="btn btn-outline-danger" onClick={() => this.onBtDeleteImage(index)} style={{ cursor: 'pointer' }}>Delete</a>
+                    </Col>
+                </Row>
+            })
+        }
     }
+
+    onBtDeleteStock = (index) => {
+        this.state.stock.splice(index, 1)
+        this.setState({ stock: this.state.stock })
+    }
+
+    onBtDeleteImage = (index) => {
+        this.state.images.splice(index, 1)
+        this.setState({ images: this.state.images })
+    }
+
+    // Untuk set value kedalam state.images
+    handleImages = (e, index) => {
+        let temp = [...this.state.images]
+        temp[index] = e.target.value
+        this.setState({ images: temp })
+    }
+
+    handleType = (e, index) => {
+        let temp = [...this.state.stock]
+        temp[index].type = e.target.value;
+        this.setState({ stock: temp })
+    }
+
+    handleStock = (e, index) => {
+        let temp = [...this.state.stock]
+        temp[index].qty = parseInt(e.target.value)
+        this.setState({ stock: temp })
+    }
+
+    onBtCancel = () => {
+        this.setState({ stock: [], images: [] })
+        // fungsi untuk close modal
+        this.props.btClose()
+    }
+
     render() {
+        console.log('ModalOpen', this.props.modalOpen)
         return (
-            <div>
-                <Button color="success" style={{ float: "right" }} onClick={() => this.setState({ buttonOpen: true })}  >
-                    Add
-                </Button>
-                <Modal
-                    centered
-                    size="md"
-                    toggle={() => this.setState({ buttonOpen: false })}
-                    isOpen={this.state.buttonOpen}
-                >
-                    <ModalHeader toggle={() => this.setState({ buttonOpen: false })}>
-                        Add Product
-                    </ModalHeader>
-                    <ModalBody>
-
-                        <FormGroup>
-                            <Label for="form-namaproduk">
-                                Nama Product
-                            </Label>
-                            <Input
-                                id="form-namaproduk"
-                                name="nama-produk"
-                                type="text"
-                                innerRef={(element) => this.namaAdd = element}
-
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="form-deskripsi">
-                                Deskripsi
-                            </Label>
-                            <Input
-                                id="form-deskripsi"
-                                name="deskripsi"
-                                type="text"
-                                innerRef={(element) => this.deskripsiAdd = element}
-                            />
-                        </FormGroup>
-                        <Row>
-                            <FormGroup className="col-6">
-                                <Label for="form-brand">
-                                    Brand
-                                </Label>
-                                <Input
-                                    id="form-brand"
-                                    name="brand"
-                                    type="text"
-                                    innerRef={(element) => this.brandAdd = element}
-
-                                />
+            <Modal isOpen={this.props.modalOpen} toggle={this.props.btClose} >
+                <ModalHeader toggle={this.props.btClose}>Add Product</ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <Label for="textNama">Nama Product</Label>
+                        <Input type="text" id="textNama" innerRef={elemen => this.inNama = elemen} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="textDes">Deskripsi</Label>
+                        <Input type="text" id="textDes" innerRef={elemen => this.inDeskripsi = elemen} />
+                    </FormGroup>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="textBrand">Brand</Label>
+                                <Input type="text" id="textBrand" innerRef={elemen => this.inBrand = elemen} />
                             </FormGroup>
-                            <FormGroup className="col-6">
-                                <Label for="form-kategori">
-                                    Kategori
-                                </Label>
-                                <Input
-                                    id="form-kategori"
-                                    name="kategori"
-                                    type="text"
-                                    innerRef={(element) => this.kategoriAdd = element}
-                                />
+                        </Col>
+                        <Col>
+                            <FormGroup>
+                                <Label for="textKategori">Kategori</Label>
+                                <Input type="text" id="textKategori" innerRef={elemen => this.inKategori = elemen} />
                             </FormGroup>
-                        </Row>
-                        <FormGroup>
-                            <Label for="form-harga">
-                                Harga
-                            </Label>
-                            <Input
-                                id="form-harga"
-                                name="harga"
-                                type="number"
-                                innerRef={(element) => this.hargaAdd = element}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Stok</Label>
-                            <Button size="sm" onClick={() => this.addStock()} style={{ float: "right" }} color="success" outline>Add Stock</Button>
-                            {this.printStock()}
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Images</Label>
-                            <Button size="sm" onClick={() => this.addImage()} style={{ float: "right" }} color="success" outline>Add Images</Button>
-                            {this.printImages()}
-                        </FormGroup>
-
-
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.btnSubmit}>
-                            Submit
-                        </Button>
-                        {' '}
-                        <Button onClick={() => this.setState({ buttonOpen: false })}>
-                            Cancel
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+                        </Col>
+                    </Row>
+                    <FormGroup>
+                        <Label for="textHarga">Harga</Label>
+                        <Input type="number" id="textHarga" innerRef={elemen => this.inHarga = elemen} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Stock</Label>
+                        <Button outline color="success" type="button" size="sm" style={{ float: 'right' }} onClick={this.onBtAddStock}>Add Stock</Button>
+                        {this.printStock()}
+                    </FormGroup>
+                    <hr />
+                    <FormGroup>
+                        <Label>Images</Label>
+                        <Button outline color="success" type="button" size="sm" style={{ float: 'right' }} onClick={this.onBtAddImages} >Add Image</Button>
+                        {this.printImages()}
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button type="button" color="primary" onClick={this.onBtAdd}>Submit</Button>{' '}
+                    <Button color="secondary" onClick={this.onBtCancel}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
         );
     }
 }
 
 export default ModalAdd;
+// import React from 'react';
+// import axios from 'axios';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
+// import { Col, FormGroup, Label, Input, Row } from "reactstrap"
+// import { API_URL } from '../helper';
+// class ModalAdd extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             buttonOpen: false,
+//             inputStock: [],
+//             inputImages: [],
+//         }
+//     }
+
+//     btnSubmit = () => {
+//         let data = {
+//             nama: this.namaAdd.value,
+//             deskripsi: this.deskripsiAdd.value,
+//             brand: this.brandAdd.value,
+//             kategori: this.kategoriAdd.value,
+//             harga: parseInt(this.hargaAdd.value),
+//             images: this.state.inputImages,
+//             stock: this.state.inputStock
+//         }
+//         if (data.nama == "" || data.deskripsi == "" || data.brand == "" || data.kategori == "" || data.stock.length == 0 || data.images.length == 0) {
+//             alert("Isi data dengan lengkap")
+//         } else {
+
+//             axios.post(`${API_URL}/products`, data)
+
+//                 .then(res => {
+//                     console.log(res.data)
+//                     this.props.getData()
+//                     alert("Add product success")
+//                 }).catch(err => {
+//                     console.log(err)
+//                 })
+//         }
+//     }
+//     btnDeleteStock = (idx) => {
+//         let deleteStock = this.state.inputStock
+//         deleteStock.splice(idx, 1)
+//         this.setState({ deleteStock })
+//     }
+//     btnDeleteImage = (idx) => {
+//         let deleteImage = this.state.inputImages
+//         deleteImage.splice(idx, 1)
+//         this.setState({ deleteImage })
+
+//     }
+//     addImage = () => {
+//         let newImage = ""
+//         this.setState(({ inputImages: this.state.inputImages.concat([newImage]) }))
+//     }
+
+//     addStock = () => {
+//         let newStock = {
+//             type: "",
+//             qty: null
+//         }
+//         this.setState(({ inputStock: this.state.inputStock.concat([newStock]) }))
+//     }
+//     handleType = (e, index) => {
+//         let temp = [...this.state.inputStock]
+//         temp[index].type = e.target.value
+//         this.setState({ inputStock: temp })
+//     }
+//     handleQty = (e, index) => {
+//         let temp = [...this.state.inputStock]
+//         temp[index].qty = parseInt(e.target.value)
+//         this.setState({ inputStock: temp })
+//     }
+//     handleImage = (e, index) => {
+//         let temp = [...this.state.inputImages]
+//         temp[index] = e.target.value
+//         this.setState({ inputImages: temp })
+//     }
+
+
+//     printStock = () => {
+//         if (this.state.inputStock.length > 0){
+
+//             return this.state.inputStock.map((item, index) => {
+//                 return <Row>
+//                 <Col>
+//                     <Input onChange={(e) => this.handleType(e, index)} style={{textAlign:"center"}} type="text" placeholder={`Type-${index + 1}`} />
+//                 </Col>
+//                 <Col>
+//                     <Input onChange={(e) => this.handleQty(e, index)} style={{textAlign:"center"}} type="number" placeholder={`Stock-${index + 1}`} />
+//                 </Col>
+//                 <Col>
+//                     <Button size="sm" onClick={this.btnDeleteStock} style={{ cursor: 'pointer' }} color="danger" outline>Delete</Button>
+//                 </Col>
+//             </Row>
+//         })
+//     }
+
+
+
+//     }
+//     printImages = () => {
+//         if (this.state.inputImages.length > 0){
+//             return this.state.inputImages.map((item, index) => {
+//                 return <Row>
+//                 <Col>
+//                     <Input onChange={(e) => this.handleImage(e, index)} style={{textAlign:"center"}} placeholder={`Image-${index + 1}`} type="text" />
+//                 </Col>
+//                 <Col>
+//                     <Button size="sm" onClick={this.btnDeleteImage} style={{ cursor: 'pointer' }} color="danger" outline>Delete</Button>
+//                 </Col>
+
+//             </Row>
+//         })
+//       }
+//     }
+//     render() {
+//         return (
+//             <div>
+//                 <Button color="success" style={{ float: "right" }} onClick={() => this.setState({ buttonOpen: true })}  >
+//                     Add
+//                 </Button>
+//                 <Modal
+//                     centered
+//                     size="md"
+//                     toggle={() => this.setState({ buttonOpen: false })}
+//                     isOpen={this.state.buttonOpen}
+//                 >
+//                     <ModalHeader toggle={() => this.setState({ buttonOpen: false })}>
+//                         Add Product
+//                     </ModalHeader>
+//                     <ModalBody>
+//                         <FormGroup>
+//                             <Label for="form-namaproduk">
+//                                 Nama Product
+//                             </Label>
+//                             <Input
+//                                 id="form-namaproduk"
+//                                 name="nama-produk"
+//                                 type="text"
+//                                 innerRef={(element) => this.namaAdd = element}
+
+//                             />
+//                         </FormGroup>
+//                         <FormGroup>
+//                             <Label for="form-deskripsi">
+//                                 Deskripsi
+//                             </Label>
+//                             <Input
+//                                 id="form-deskripsi"
+//                                 name="deskripsi"
+//                                 type="text"
+//                                 innerRef={(element) => this.deskripsiAdd = element}
+//                             />
+//                         </FormGroup>
+//                         <Row>
+//                             <FormGroup className="col-6">
+//                                 <Label for="form-brand">
+//                                     Brand
+//                                 </Label>
+//                                 <Input
+//                                     id="form-brand"
+//                                     name="brand"
+//                                     type="text"
+//                                     innerRef={(element) => this.brandAdd = element}
+
+//                                 />
+//                             </FormGroup>
+//                             <FormGroup className="col-6">
+//                                 <Label for="form-kategori">
+//                                     Kategori
+//                                 </Label>
+//                                 <Input
+//                                     id="form-kategori"
+//                                     name="kategori"
+//                                     type="text"
+//                                     innerRef={(element) => this.kategoriAdd = element}
+//                                 />
+//                             </FormGroup>
+//                         </Row>
+//                         <FormGroup>
+//                             <Label for="form-harga">
+//                                 Harga
+//                             </Label>
+//                             <Input
+//                                 id="form-harga"
+//                                 name="harga"
+//                                 type="number"
+//                                 innerRef={(element) => this.hargaAdd = element}
+//                             />
+//                         </FormGroup>
+//                         <FormGroup>
+//                             <Label>Stok</Label>
+//                             <Button size="sm" onClick={this.addStock} style={{ float: "right" }} color="success" outline>Add Stock</Button>
+//                             {this.printStock()}
+//                         </FormGroup>
+//                         <FormGroup>
+//                             <Label>Images</Label>
+//                             <Button size="sm" onClick={this.addImage} style={{ float: "right" }} color="success" outline>Add Images</Button>
+//                             {this.printImages()}
+//                         </FormGroup>
+
+
+//                     </ModalBody>
+//                     <ModalFooter>
+//                         <Button color="primary" onClick={this.btnSubmit}>
+//                             Submit
+//                         </Button>
+//                         {' '}
+//                         <Button onClick={() => this.setState({ buttonOpen: false })}>
+//                             Cancel
+//                         </Button>
+//                     </ModalFooter>
+//                 </Modal>
+//             </div>
+//         );
+//     }
+// }
+
+// export default ModalAdd;

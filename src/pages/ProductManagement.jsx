@@ -2,19 +2,24 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Table, Button } from 'reactstrap';
 import ModalEditProduct from '../component/ModalEditProduct';
-import {dataAction} from '../redux/actions'
+import { getProductsAction } from '../redux/actions'
 import { connect } from "react-redux"
 import ModalAdd from '../component/ModalAdd';
-const API_URL = "http://localhost:2000"
+import { API_URL } from '../helper';
+
 
 class ProductManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
             productList: [],
-            modalEditOpen:false,
-            detailProduk:{},
-            modalAddOpen:false
+            modalEditOpen: false,
+            detailProduk: {},
+            modalAddOpen: false,
+            thumbnailIdx: 0,
+            modalOpen: false,
+            selectedIndex: null
+
         }
     }
 
@@ -25,9 +30,9 @@ class ProductManagement extends Component {
     getData = () => {
         axios.get(`${API_URL}/products`)
             .then(res => {
-                console.log("RESPON DATA==.",res.data)
+                console.log("RESPON DATA==.", res.data)
                 this.setState({ productList: res.data })
-                this.props.dataAction(res.data[0])
+                // this.props.dataAction(res.data[0])
             })
             .catch(err => {
                 console.log(err)
@@ -39,7 +44,19 @@ class ProductManagement extends Component {
             return <tr>
                 <td>{index + 1}</td>
                 <td style={{ width: '20vw', textAlign: 'center' }}>
-                    <img src={item.images[0]} width="80%" alt={item.nama + index} />
+                    {
+                        this.state.selectedIdx == index ?
+                            < img src={item.images[this.state.thumbnailIdx]} width="80%" alt={item.nama + index} />
+                            :
+                            <img src={item.images[0]} width="80%" alt={item.nama + index} />
+                    }
+
+                    <div>
+                        {item.images.map((val, idx) => {
+                            return <img src={val} width="20%" alt={item.nama + index} 
+                            onClick={() => this.setState({ thumbnailIdx: idx, selectedIdx: index })} />
+                        })}
+                    </div>
                 </td>
                 <td>{item.nama}</td>
                 <td>{item.brand}</td>
@@ -50,12 +67,23 @@ class ProductManagement extends Component {
             </tr>
         })
     }
+    onBtDelete = () => {
+
+    }
 
     render() {
         return (
             <div className="container p-3">
                 <h3 className="text-center">Produk Management</h3>
-                <ModalAdd/>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+
+                    <Button type="button" color="success" onClick={() => this.setState({ modalOpen: !this.state.modalOpen })}>Add</Button>
+                </div>
+                <ModalAdd
+                    getData={this.getData} 
+                    btClose={() => this.setState({ modalOpen: !this.state.modalOpen })}
+                    modalOpen={this.state.modalOpen}
+                    />
                 <ModalEditProduct
                     modalOpen={this.state.modalEditOpen}
                     detailProduk={this.state.detailProduk}
@@ -82,4 +110,4 @@ class ProductManagement extends Component {
     }
 }
 
-export default connect(null,{dataAction}) (ProductManagement);
+export default connect(null, { getProductsAction })(ProductManagement);
