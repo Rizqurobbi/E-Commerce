@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Collapse, DropdownToggle, UncontrolledDropdown, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Button, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Collapse, DropdownToggle, UncontrolledDropdown, DropdownMenu, DropdownItem, Spinner } from 'reactstrap';
 import { connect } from 'react-redux'
 import { logOutAction } from '../redux/actions';
 class NavbarComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            openCollapse: false
+            openCollapse: false,
         }
     }
     render() {
         return (
-            <Navbar expand="md">
+            <Navbar expand="md" className="shadow">
                 <NavbarBrand>
                     <Link to="/">
                         <img src="https://www.sipayo.com/wp-content/uploads/2017/12/e-commerce.png" alt="logo-brand" width="50px" />
@@ -33,6 +33,9 @@ class NavbarComponent extends React.Component {
                         </NavItem>
                     </Nav>
                     {
+                        this.props.loading?
+                        <Spinner style={{marginLeft:"auto", marginRight:50}}>Loading...</Spinner>
+                        :
                         this.props.username ?
                             <UncontrolledDropdown style={{ marginLeft: "auto" }}>
                                 <DropdownToggle caret nav size="sm" outline className="d-flex align-items-center" style={{ color: "#0984e3" }}>
@@ -58,7 +61,7 @@ class NavbarComponent extends React.Component {
                                                 </Link>
                                             </DropdownItem>
                                             <DropdownItem divider />
-                                            <DropdownItem onClick={()=>{localStorage.removeItem("data");this.props.logOutAction()}}>
+                                            <DropdownItem onClick={() => { localStorage.removeItem("data"); this.props.logOutAction() }}>
                                                 Keluar
                                             </DropdownItem>
                                         </DropdownMenu>
@@ -75,7 +78,7 @@ class NavbarComponent extends React.Component {
                                                 </Link>
                                             </DropdownItem>
                                             <DropdownItem divider />
-                                            <DropdownItem onClick={()=>{localStorage.removeItem("data");this.props.logOutAction()}}>
+                                            <DropdownItem onClick={() => { localStorage.removeItem("data"); this.props.logOutAction() }}>
                                                 Keluar
                                             </DropdownItem>
                                         </DropdownMenu>
@@ -83,9 +86,11 @@ class NavbarComponent extends React.Component {
 
                             </UncontrolledDropdown>
                             :
+
                             <Link to="/auth-page" style={{ marginLeft: "auto" }}>
                                 <Button type="button" color="warning" outline>Masuk dan Daftar</Button>
                             </Link>
+
 
                     }
                 </Collapse>

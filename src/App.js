@@ -20,7 +20,9 @@ import ProductDetail from './pages/ProductDetail';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      loading:true
+    }
   }
 
   componentDidMount() {
@@ -34,10 +36,13 @@ class App extends React.Component {
       axios.get(`${API_URL}/dataUser?email=${local.email}&password${local.password}`)
       .then((res)=>{
         console.log("keepLogin berhasil ==>", res.data)
+        this.setState({loading:false})
         this.props.loginAction(res.data[0])
       }).catch((err)=>{
         console.log(err)
       })
+    }else{
+      this.setState({loading:false})
     }
   }
   getProducts=()=>{
@@ -53,7 +58,7 @@ class App extends React.Component {
       <div>
         {/* <Navbar/>
       <Form/> */}
-        <NavbarComponent />
+        <NavbarComponent loading={this.state.loading} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth-page" element={<AuthPage />} />

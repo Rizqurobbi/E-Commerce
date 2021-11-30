@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Button, UncontrolledCollapse, Card, CardBody, Col, Form, FormGroup, Row, Input } from 'reactstrap';
+import { Container, Button, UncontrolledCollapse, Card, CardBody, Col, Form, FormGroup, Row, Input, Toast, ToastHeader, ToastBody, Spinner } from 'reactstrap';
 import { API_URL } from '../helper';
 
 
@@ -10,7 +10,10 @@ class ProductDetail extends React.Component {
         super(props);
         this.state = {
             detail: [],
-            counter: 0
+            counter: 0,
+            thumbnail: 0,
+            selectedType: {},
+            toastOpen: false
         }
     }
     componentDidMount() {
@@ -24,28 +27,51 @@ class ProductDetail extends React.Component {
             })
     }
     btnIncrement = (num) => {
-        this.state.counter += num
-        // this.setState({propertiState : dataTerbaru}) : Untuk melakukan update data pada state
-        this.setState({
-            counter: this.state.counter
-        })
+        if (this.state.selectedType.qty) {
+            if (this.state.counter < this.state.selectedType.qty) {
+
+                this.state.counter += num
+                // this.setState({propertiState : dataTerbaru}) : Untuk melakukan update data pada state
+                this.setState({
+                    counter: this.state.counter
+                })
+            } else {
+                this.setState({ toastOpen: !this.state.toastOpen })
+            }
+        }
     }
     btnDecrement = (num) => {
-        this.state.counter -= num
-        this.setState({
-            counter: this.state.counter
-        })
+        if (this.state.counter > 1) {
+
+            this.state.counter -= num
+            this.setState({
+                counter: this.state.counter
+            })
+        }
     }
+    // printToast = () => {
+
+    //     <Toast isOpen={this.state.toastOpen} style={{ position: "fixed", left: 10 }}>
+    //         <ToastHeader icon="warning"
+    //             toogle={() => this.setState({ toastOpen: false })}>
+    //             Add to cart warning
+    //         </ToastHeader>
+    //         <ToastBody>
+    //             Stok produk tidak cukup
+    //         </ToastBody>
+    //     </Toast>
+    // }
     printCart = () => {
         return this.state.detail.map((value, index) => {
             return <div>
-                <div class="card" className="d-flex shadow p-3 mb-5 bg-white rounded" style={{}}>
-                    <Col>
+                <div className="card" className="d-flex shadow p-3 mb-5 bg-white rounded" style={{}}>
+                    <Col md="1">
                         {/* <Row> */}
 
                         {value.images.map((val, idx) => {
-                            return <img src={val} width="20%" alt={value.nama + index}
-                                onClick={() => this.setState({ thumbnailIdx: idx, selectedIdx: index })} />
+                            return <img src={val} width="100%" alt={value.nama + index}
+                                onClick={() => this.setState({ thumbnailIdx: idx, selectedIdx: index })}
+                                style={{ borderBottom: this.state.thumbnailIdx == idx && "3px solid blue" }} />
                         })}
 
                         {/* </Row> */}
@@ -67,12 +93,15 @@ class ProductDetail extends React.Component {
 
                             <FormGroup>
 
-                                <p className="font-weight-bold my-1" id="toggler" style={{ cursor: "pointer" }}>Type :</p>
+                                <p className="font-weight-bold my-1" id="toggler" style={{ cursor: "pointer" }}>Type :{this.state.selectedType.type}</p>
                                 <UncontrolledCollapse toggler="#toggler">
                                     {
                                         value.stock.map((value, idx) => {
                                             return (
-                                                <p>{value.type} : {value.qty} </p>
+                                                <Button outline color="secondary" size="sm"
+                                                    style={{ width: '100%', border: 'none', textAlign: 'left' }}
+                                                    onClick={() => this.setState({ selectedType: value, counter: 1 })}>{value.type} : {value.qty} </Button>
+
                                             )
                                         })
                                     }
@@ -99,9 +128,9 @@ class ProductDetail extends React.Component {
                             <p class="card-text">{value.deskripsi}</p>
                             <Row>
                                 <Col>
-                                    Jumlah:
+                                    Jumlah: 
                                 </Col>
-                                <Col style={{display:"flex"}}>
+                                <Col style={{ display: "flex" }}>
                                     <Col>
                                         <Button size="sm" onClick={() => this.btnDecrement(1)}>-</Button>
                                     </Col>
@@ -110,12 +139,12 @@ class ProductDetail extends React.Component {
                                     </Col>
                                     <Col>
                                         <Button size="sm" onClick={() => this.btnIncrement(1)}>+</Button>
-                                    </Col>    
-                                    
+                                    </Col>
+
                                 </Col>
                             </Row>
                             <Row>
-                            <Button>Add To Cart</Button>
+                                <Button>Add To Cart</Button>
                             </Row>
                         </div>
                     </Col>
@@ -127,8 +156,17 @@ class ProductDetail extends React.Component {
 
         return (
             <Container style={{ margin: "15vh" }}>
-
+                <Toast isOpen={this.state.toastOpen} style={{ position: "fixed", left: 128, top:100 }}>
+                    <ToastHeader icon="warning"
+                        toogle={() => this.setState({ toastOpen: false })}>
+                        Add to cart warning
+                    </ToastHeader>
+                    <ToastBody>
+                        Stok produk tidak cukup
+                    </ToastBody>
+                </Toast>
                 {this.printCart()}
+
             </Container>
 
         );
