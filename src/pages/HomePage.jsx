@@ -94,14 +94,14 @@ class HomePage extends React.Component {
                         <img
                             className="my-5 shadow mb-1 bg-white rounded"
                             width="80%"
-                            src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/388/0938824_PE794380_S4.jpg"
+                            src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/323/0932344_PE791460_S4.jpg"
                             alt="..." />
                     </Col>
                     <Col style={{ marginTop: "auto" }}>
                         <div className="card-body my-5"
                             style={{}}>
-                            <h1 className="card-title">RUDSTA</h1>
-                            <h1 className="card-title">IKEA|Kabinet pintu kaca</h1>
+                            <h1 className="card-title">IDANÄS B</h1>
+                            <h1 className="card-title">IKEA|Rangka tempat tidur</h1>
                             <p className="card-text">Anda dapat dengan mudah menyedot debu di bawah rangka tempat tidur untuk menjaga ruang tetap bersih dan bebas debu.  Ada banyak ruang di bawah tempat tidur untuk kotak penyimpanan sehingga sempurna untuk menyimpan selimut dan bantal tambahan.  Sisi tempat tidur dapat disesuaikan memungkinkan Anda untuk menggunakan kasur dengan ketebalan yang berbeda.  Veneer kayu memberi Anda tampilan, rasa dan keindahan yang sama seperti kayu solid dengan variasi unik dalam serat, warna, dan tekstur.</p>
                         </div>
                     </Col>
