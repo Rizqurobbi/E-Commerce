@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CardBody, CardTitle, Input, Card, CardImg, ButtonGroup, Button } from "reactstrap"
+import { CardBody, CardTitle, Input, Card, CardImg, ButtonGroup, Button, InputGroup, InputGroupText, Container, Label, FormGroup, Col } from "reactstrap"
+import { getProductsAction, sortingProduct } from "../redux/actions"
 
 
 class ProductsPage extends React.Component {
@@ -16,7 +17,7 @@ class ProductsPage extends React.Component {
         let { page } = this.state
         return this.props.productsList.slice(page > 1 ? (page - 1) * 8 : page - 1, page * 8).map((value, index) => {
             return <div className="col-3 mt-2">
-                <Card>
+                <Card className="shadow p-5 mb-5 bg-white rounded">
                     <Link to={`/products-detail?id=${value.id}`} style={{ textDecoration: "none" }}>
                         <CardImg top
                             src={value.images[0]}
@@ -44,19 +45,83 @@ class ProductsPage extends React.Component {
         }
         return btn;
     }
+
+    btnSearch = () => {
+        this.props.getProductsAction(this.inSearchName.value, this.inSearchMinHarga.value, this.inSearchMaxHarga.value)
+    }
+    btnReset = () => {
+        this.props.getProductsAction()
+        this.inSearchName.value = ""
+        this.inSearchMinHarga.value = ""
+        this.inSearchMaxHarga.value = ""
+    }
+    btnClick =() =>{
+        console.log(this.inSearchSort.value)
+        if(this.inSearchSort.value == "harga-asc"){
+            this.props.sortingProduct({
+                hargaAsc: this.inSearchSort.value
+            })
+        }else if (this.inSearchSort.value == "harga-desc"){
+            this.props.sortingProduct({
+                hargaDesc: this.inSearchSort.value
+            })
+        }else if (this.inSearchSort.value == "nama-asc"){
+            this.props.sortingProduct({
+                namaAsc: this.inSearchSort.value
+            })
+        }else if (this.inSearchSort.value == "nama-desc"){
+            this.props.sortingProduct({
+                namaDesc: this.inSearchSort.value
+            })
+        }else{
+            this.props.sortingProduct()
+        }
+        // this.props.sortingProduct()
+    }
     render() {
         return (
             <div className="pt-5">
-                <div className="container">
-                    <div style={{ display: "block" }}>
-                        <Input type="select" style={{ width: "250px", marginLeft: "auto" }}>
-                            <option value="harga-asc">Harga Asc</option>
-                            <option value="harga-desc">Harga Desc</option>
-                            <option value="harga-asc">A-Z</option>
-                            <option value="nama-desc">Z-A</option>
-                            <option value="id-asc">Reset</option>
-                        </Input>
+                <Container>
+                <div className="shadow bg-white p-2 rounded mb-3">
+                        <div style={{ display: "flex", justifyContent: "space-around" }}>
+                            <FormGroup>
+                                <Label>Nama</Label>
+                                <Input type="text" id="text" placeholder="Cari produk"
+                                    innerRef={(element) => this.inSearchName = element} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Harga</Label>
+                                <div className="d-flex">
+                                    <Input type="number" id="numb1" placeholder="Minimum"
+                                        innerRef={(element) => this.inSearchMinHarga = element} />
+                                    <Input type="number" id="numb2" placeholder="Maksimum"
+                                        innerRef={(element) => this.inSearchMaxHarga = element} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Sort</Label>
+                                <InputGroup>
+                                <Input type="select" style={{ width: "250px" }}
+                                innerRef={(element) => this.inSearchSort = element}>
+                                    <option  value="harga-asc">Harga Asc</option>
+                                    <option  value="harga-desc">Harga Desc</option>
+                                    <option  value="nama-asc">A-Z</option>
+                                    <option  value="nama-desc">Z-A</option>
+                                    <option value="id-asc">Reset</option>
+                                </Input>
+                                <InputGroupText style={{ cursor: "pointer" }} onClick={this.btnClick}>
+                                    Click
+                                </InputGroupText>
+                                </InputGroup>
+                            </FormGroup>
+
+                        </div>
+                        <div className="pt-2" style={{ textAlign: "end" }}>
+                            <Button outline color="warning" onClick={this.btnReset}>Reset</Button>
+                            <Button style={{ marginLeft: 16 }} color="primary" onClick={this.btnSearch}>Filter</Button>
+                        </div>
                     </div>
+
                     <div className="row">
                         {this.printProducts()}
                     </div>
@@ -65,7 +130,7 @@ class ProductsPage extends React.Component {
                             {this.printBtnPagination()}
                         </ButtonGroup>
                     </div>
-                </div>
+                </Container>
             </div>
         );
     }
@@ -78,4 +143,4 @@ const mapToProps = ({ productsReducer }) => {
     }
 }
 
-export default connect(mapToProps)(ProductsPage);
+export default connect(mapToProps, { getProductsAction,sortingProduct })(ProductsPage);

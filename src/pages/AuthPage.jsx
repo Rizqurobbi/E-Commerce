@@ -56,16 +56,20 @@ class AuthPage extends React.Component {
         this.setState({ [propState]: value })
     }
     btnLogin = () => {
+       // Cara Redux
+        this.props.loginAction(this.state.email, this.passwordLogin.value)
+        
+        // Cara biasa
         // alert(`${this.state.email}, ${this.passwordLogin.value}`)
-        axios.get(`${API_URL}/dataUser?email=${this.state.email}&password${this.passwordLogin.value}`)
-            .then((response) => {
-                console.log("RESPONSE LOGIN ==>",response.data)
-                localStorage.setItem("data", JSON.stringify(response.data[0]))
-                this.props.loginAction(response.data[0])
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        // axios.get(`${API_URL}/dataUser?email=${this.state.email}&password${this.passwordLogin.value}`)
+        //     .then((response) => {
+        //         console.log("RESPONSE LOGIN ==>",response.data)
+        //         localStorage.setItem("data", JSON.stringify(response.data[0]))
+        //         this.props.loginAction(response.data[0])
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
 
     }
     btnRegis = () => {
