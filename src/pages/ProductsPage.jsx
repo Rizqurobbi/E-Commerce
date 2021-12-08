@@ -55,34 +55,38 @@ class ProductsPage extends React.Component {
         this.inSearchMinHarga.value = ""
         this.inSearchMaxHarga.value = ""
     }
-    btnClick =() =>{
-        console.log(this.inSearchSort.value)
-        if(this.inSearchSort.value == "harga-asc"){
-            this.props.sortingProduct({
-                hargaAsc: this.inSearchSort.value
-            })
-        }else if (this.inSearchSort.value == "harga-desc"){
-            this.props.sortingProduct({
-                hargaDesc: this.inSearchSort.value
-            })
-        }else if (this.inSearchSort.value == "nama-asc"){
-            this.props.sortingProduct({
-                namaAsc: this.inSearchSort.value
-            })
-        }else if (this.inSearchSort.value == "nama-desc"){
-            this.props.sortingProduct({
-                namaDesc: this.inSearchSort.value
-            })
-        }else{
-            this.props.sortingProduct()
-        }
+    btnClick = (e) => {
+        this.props.sortingProduct({
+            field: e.target.value.split('-')[0],
+            sortType: e.target.value.split('-')[1]
+        })
+        // console.log(this.inSearchSort.value)
+        // if(this.inSearchSort.value == "harga-asc"){
+        //     this.props.sortingProduct({
+        //         hargaAsc: this.inSearchSort.value
+        //     })
+        // }else if (this.inSearchSort.value == "harga-desc"){
+        //     this.props.sortingProduct({
+        //         hargaDesc: this.inSearchSort.value
+        //     })
+        // }else if (this.inSearchSort.value == "nama-asc"){
+        //     this.props.sortingProduct({
+        //         namaAsc: this.inSearchSort.value
+        //     })
+        // }else if (this.inSearchSort.value == "nama-desc"){
+        //     this.props.sortingProduct({
+        //         namaDesc: this.inSearchSort.value
+        //     })
+        // }else{
+        //     this.props.sortingProduct()
+        // }
         // this.props.sortingProduct()
     }
     render() {
         return (
             <div className="pt-5">
                 <Container>
-                <div className="shadow bg-white p-2 rounded mb-3">
+                    <div className="shadow bg-white p-2 rounded mb-3">
                         <div style={{ display: "flex", justifyContent: "space-around" }}>
                             <FormGroup>
                                 <Label>Nama</Label>
@@ -101,17 +105,18 @@ class ProductsPage extends React.Component {
                             <FormGroup>
                                 <Label>Sort</Label>
                                 <InputGroup>
-                                <Input type="select" style={{ width: "250px" }}
-                                innerRef={(element) => this.inSearchSort = element}>
-                                    <option  value="harga-asc">Harga Asc</option>
-                                    <option  value="harga-desc">Harga Desc</option>
-                                    <option  value="nama-asc">A-Z</option>
-                                    <option  value="nama-desc">Z-A</option>
-                                    <option value="id-asc">Reset</option>
-                                </Input>
-                                <InputGroupText style={{ cursor: "pointer" }} onClick={this.btnClick}>
-                                    Click
-                                </InputGroupText>
+                                    <Input type="select" style={{ width: "250px" }}
+                                        onChange={this.btnClick}>
+                                        {/* innerRef={(element) => this.inSearchSort = element} */}
+                                        <option value="harga-asc">Harga Asc</option>
+                                        <option value="harga-desc">Harga Desc</option>
+                                        <option value="nama-asc">A-Z</option>
+                                        <option value="nama-desc">Z-A</option>
+                                        <option value="id-asc">Reset</option>
+                                    </Input>
+                                    <InputGroupText style={{ cursor: "pointer" }} onClick={this.btnClick}>
+                                        Click
+                                    </InputGroupText>
                                 </InputGroup>
                             </FormGroup>
 
@@ -143,4 +148,4 @@ const mapToProps = ({ productsReducer }) => {
     }
 }
 
-export default connect(mapToProps, { getProductsAction,sortingProduct })(ProductsPage);
+export default connect(mapToProps, { getProductsAction, sortingProduct })(ProductsPage);

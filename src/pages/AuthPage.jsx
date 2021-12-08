@@ -91,6 +91,7 @@ class AuthPage extends React.Component {
                         password: this.passwordRegis.value,
                         role: "user",
                         status: "active",
+                        cart:[]
                     }).then((response) => {
                         // alert("Registrasi Berhasil")
                         this.setState({
