@@ -16,19 +16,37 @@ class HistoryPage extends React.Component {
         }
     }
     componentDidMount() {
+       this.getData()
+    }
+    getData=()=>{
         axios.get(`${API_URL}/userTransactions?iduser=${this.props.iduser}`)
+        .then((res) => {
+            console.log(res.data)
+            this.setState({ transaksi: res.data })
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+    btnBatal = (id) => {
+        axios.patch(`${API_URL}/userTransactions/${id}`, {
+            status: "Pesanan Batal"
+        })
             .then((res) => {
-                console.log(res.data)
-                this.setState({ transaksi: res.data })
-            }).catch((err) => {
+                this.getData()
+                this.setState({openModal:false})
+            })
+            .catch((err) => {
                 console.log(err)
             })
     }
     printHistory = () => {
         return this.state.transaksi.map((value, index) => {
+            
+            let badgeColor =value.status.includes("Batal")?"danger":"warning"
+
             return <div className="shadow pb-3 rounded">
                 <div className="shadow-sm p-2 bg-dark rounded" style={{ color: "white" }}>
-                    <span>{value.date}<Badge color="warning">{value.status}</Badge></span>
+                    <span>{value.date}<Badge color={badgeColor}>{value.status}</Badge></span>
                     <b style={{ marginLeft: 20 }}> {value.invoice}</b>
                 </div>
                 <div className="row p-3">
@@ -46,7 +64,7 @@ class HistoryPage extends React.Component {
                     </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                    <Button color="danger" >Batalkan Pesanan</Button>
+                    <Button color="danger" onClick={() => this.btnBatal(value.id)} >Batalkan Pesanan</Button>
                     <Button color="primary" outline style={{ border: "none" }} onClick={() => this.setState({ openModal: !this.state.openModal, detail: value, selectedIdx: index })}>Lihat Detail Produk</Button>
                 </div>
             </div>
@@ -57,6 +75,7 @@ class HistoryPage extends React.Component {
             <div className="container p-5">
                 {/* Modal Detail Transaksi */}
                 <ModalTransaksi
+                    btnBatal={this.btnBatal}
                     dataTransaksi={this.state.detail}
                     openModal={this.state.openModal}
                     toggleModal={() => this.setState({ openModal: !this.state.openModal })} />

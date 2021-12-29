@@ -51,7 +51,6 @@ class AuthPage extends React.Component {
             })
         }
     }
-
     handleInput = (value, propState) => {
         this.setState({ [propState]: value })
     }
@@ -65,7 +64,7 @@ class AuthPage extends React.Component {
         //     .then((response) => {
         //         console.log("RESPONSE LOGIN ==>",response.data)
         //         localStorage.setItem("data", JSON.stringify(response.data[0]))
-        //         this.props.loginAction(response.data[0])
+        //         this.props.loginAction(response.data[0]
         //     })
         //     .catch((err) => {
         //         console.log(err)

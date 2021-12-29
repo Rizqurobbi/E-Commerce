@@ -54,7 +54,7 @@ class ModalEditProduct extends React.Component {
         axios.patch(`${API_URL}/products/${this.props.detailProduk.id}`,data)
             .then((res)=>{
                 this.props.getProductsAction()
-                this.props.btClose()
+                // this.props.btClose()
                 this.setState({stock:[], images: [], edit: !this.state.edit})
             }).catch((err)=>{
                 console.log(err)

@@ -17,33 +17,24 @@
       "id": 2,
       "cart": [
         {
-          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/771/0677106_PE718920_S4.jpg",
-          "nama": "VARDAGEN",
-          "brand": "IKEA",
-          "harga": 599000,
-          "totalHarga": 2396000,
-          "type": "R30",
-          "qty": 4
-        },
-        {
-          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954177_PE804200_S4.jpg",
-          "nama": "VITLÖK",
-          "brand": "IKEA",
-          "harga": 299000,
-          "totalHarga": 1196000,
-          "type": "Type-1",
-          "qty": 4
-        },
-        {
-          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810720_PE771385_S4.jpg",
-          "nama": "IDALINNEA D",
-          "brand": "IKEA",
-          "harga": 79000,
-          "totalHarga": 237000,
-          "type": "M",
-          "qty": 3
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955765_PE804101_S4.jpg",
+          "nama": "HAUGA V.2",
+          "brand": "Mr. DYI",
+          "harga": 1200000,
+          "totalHarga": 1200000,
+          "type": "Black",
+          "qty": 1
         }
       ]
+    },
+    {
+      "username": "akuganteng",
+      "email": "akuganteng@mail.com",
+      "password": "1234",
+      "role": "user",
+      "status": "active",
+      "cart": [],
+      "id": 3
     }
   ],
   "products": [
@@ -52,7 +43,7 @@
       "deskripsi": " Ritsleting yang tersembunyi membuat sarung mudah dilepas.  Sarung bantal dengan tampilan cermin karena memiliki pola yang sama di kedua sisi.  Katun adalah bahan alami lembut dan mudah dirawat yang dapat Anda cuci dengan mesin.",
       "brand": "IKEA",
       "kategori": "Perabotan",
-      "harga": 79000,
+      "harga": "79000",
       "stock": [
         {
           "id": null,
@@ -375,15 +366,56 @@
   ],
   "userTransactions": [
     {
+      "iduser": 3,
+      "username": "akuganteng",
+      "invoice": "#INV/1639121862535",
+      "date": "12/10/2021",
+      "note": "Sampai dengan selamat",
+      "totalharga": 3190000,
+      "ongkir": 200000,
+      "totalpayment": 3390000,
+      "detail": [
+        {
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955765_PE804101_S4.jpg",
+          "nama": "HAUGA V.2",
+          "brand": "Mr. DYI",
+          "harga": 1200000,
+          "totalHarga": 1200000,
+          "type": "Black",
+          "qty": 1
+        },
+        {
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/334/0933452_PE791908_S4.jpg",
+          "nama": "LINNEBÄCK",
+          "brand": "IKEA",
+          "harga": 995000,
+          "totalHarga": 1990000,
+          "type": "Black",
+          "qty": 2
+        }
+      ],
+      "status": "Terima Pesanan",
+      "id": 3
+    },
+    {
       "iduser": 2,
       "username": "zakki",
-      "invoice": "#INV/1638968235138",
-      "date": "12/8/2021",
-      "note": "Semoga barang sampai dengan kondisi baik",
-      "totalharga": 2227000,
-      "ongkir": 30000,
-      "totalpayment": 2257000,
+      "invoice": "#INV/1639121981770",
+      "date": "12/10/2021",
+      "note": "Sampai dengan selamat ya",
+      "totalharga": 3222000,
+      "ongkir": 200000,
+      "totalpayment": 3422000,
       "detail": [
+        {
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/334/0933452_PE791908_S4.jpg",
+          "nama": "LINNEBÄCK",
+          "brand": "IKEA",
+          "harga": 995000,
+          "totalHarga": 2985000,
+          "type": "Black",
+          "qty": 3
+        },
         {
           "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810720_PE771385_S4.jpg",
           "nama": "IDALINNEA D",
@@ -392,19 +424,51 @@
           "totalHarga": 237000,
           "type": "M",
           "qty": 3
+        }
+      ],
+      "status": "Pesanan Batal",
+      "id": 4
+    },
+    {
+      "iduser": 3,
+      "username": "akuganteng",
+      "invoice": "#INV/1639126143395",
+      "date": "12/10/2021",
+      "note": "Semoga sampai",
+      "totalharga": 5094000,
+      "ongkir": 300000,
+      "totalpayment": 5394000,
+      "detail": [
+        {
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954177_PE804200_S4.jpg",
+          "nama": "VITLÖK",
+          "brand": "IKEA",
+          "harga": 299000,
+          "totalHarga": 897000,
+          "type": "Type-1",
+          "qty": 3
         },
         {
-          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/334/0933452_PE791908_S4.jpg",
-          "nama": "LINNEBÄCK",
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/771/0677106_PE718920_S4.jpg",
+          "nama": "VARDAGEN",
           "brand": "IKEA",
-          "harga": 995000,
-          "totalHarga": 1990000,
-          "type": "White",
+          "harga": 599000,
+          "totalHarga": 1797000,
+          "type": "R30",
+          "qty": 3
+        },
+        {
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/727/0972709_PE811745_S4.jpg",
+          "nama": "HAUGA V.3",
+          "brand": "Mr. DYI",
+          "harga": 1200000,
+          "totalHarga": 2400000,
+          "type": "Black",
           "qty": 2
         }
       ],
       "status": "Menunggu Konfirmasi",
-      "id": 1
+      "id": 5
     }
   ]
 }
